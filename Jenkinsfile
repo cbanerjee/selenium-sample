@@ -51,11 +51,11 @@ pipeline {
       }
       stage('SonarQube Analysis'){
          steps{
-               mvn clean verify
-               mvn sonar:sonar \
+               bat 'mvn clean verify'
+               bat '''mvn sonar:sonar \
                   -Dsonar.projectKey=pipeline-test \
                   -Dsonar.host.url=http://localhost:9000 \
-                  -Dsonar.login=086a293bb8528f2f968a31ecda1c1c3a9190e4b0
+                  -Dsonar.login=086a293bb8528f2f968a31ecda1c1c3a9190e4b0'''
          }
       }
       stage('Archive'){

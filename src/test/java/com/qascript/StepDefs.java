@@ -19,7 +19,7 @@ public class StepDefs {
 
     @Given("Launch website")
     public void launchQAScript() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://www.selenium.dev/");
 

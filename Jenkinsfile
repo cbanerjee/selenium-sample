@@ -5,11 +5,6 @@ pipeline {
       stage('Build') {
          steps {
             bat 'mvn -B compile'
-            //Next 3 lines I added
-          '''  dir("test")
-            {
-             sh  'touch $WORKSPACE/Artifact_$BUILD_NUMBER'
-            }'''
          }
       }
       //Extra addition from here

@@ -8,7 +8,7 @@ pipeline {
          }
       }
       //Extra addition from here
-      stage ('Upload') {
+      stage ('JFrog Upload') {
             steps {
                 rtUpload (
                     buildName: JOB_NAME,
@@ -43,11 +43,20 @@ pipeline {
         }
       
       //Extra addition ends here
-      stage('Test'){
+      stage('Cucumber Test'){
           steps{
               bat 'mvn -B clean install'
               cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
               }
+      }
+      stage('SonarQube Analysis'){
+         steps{
+               mvn clean verify
+               mvn sonar:sonar \
+                  -Dsonar.projectKey=pipeline-test \
+                  -Dsonar.host.url=http://localhost:9000 \
+                  -Dsonar.login=086a293bb8528f2f968a31ecda1c1c3a9190e4b0
+         }
       }
       stage('Archive'){
           steps{

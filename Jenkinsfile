@@ -43,12 +43,6 @@ pipeline {
         }
       
       //Extra addition ends here
-      stage('Cucumber Test'){
-          steps{
-              bat 'mvn -B clean install'
-              cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
-              }
-      }
       stage('SonarQube Analysis'){
          steps{
                bat 'mvn clean verify'
@@ -58,10 +52,24 @@ pipeline {
                   -Dsonar.login=086a293bb8528f2f968a31ecda1c1c3a9190e4b0'''
          }
       }
-      stage('Archive'){
-          steps{
-              archiveArtifacts 'target/*.jar'
+      //stage('Archive'){
+      //    steps{
+      //        archiveArtifacts 'target/*.jar'
+      //    }
+      //}
+      
+   } //stages end
+   post {
+   		  always{
+   		  		echo 'Stages completed, Now going to Post section'
+   		  }
+          success{
+          	  echo 'Stages were all good, re-running Cucumber test, please wait'
+              bat 'mvn -B clean install'
+              cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
+          }
+          unsuccessful {
+          		echo 'One or more stages failed'
           }
       }
-   }
-}
+}//pipeline end

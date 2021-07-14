@@ -2,6 +2,7 @@ package com.qascript;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.Before;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,13 +14,16 @@ import java.net.URL;
 
 public class StepDefs {
     WebDriver driver;
-    String username = System.getenv("BROWSERSTACK_USERNAME");
-    String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-    String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
+    //String username = System.getenv("BROWSERSTACK_USERNAME");
+    //String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+    //String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
+    @Before
+    public void loadBrowser() {
+    	System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+    }
 
     @Given("Launch website")
     public void launchQAScript() {
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://www.selenium.dev/");
 
@@ -32,8 +36,9 @@ public class StepDefs {
         Assert.assertEquals(strTitle, "SeleniumHQ Browser Automation");
         driver.quit();
     }
+}
 
-    @Given("Launch website in BS")
+    /*@Given("Launch website in BS")
     public void launchWebsiteInBS() {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("os", "Windows");
@@ -52,7 +57,4 @@ public class StepDefs {
             bs_driver.quit();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
-
-    }
-}
+        }*/

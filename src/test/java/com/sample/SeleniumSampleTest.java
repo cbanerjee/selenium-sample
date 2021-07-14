@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sample.SeleniumSample;
+//import com.sample.SeleniumSample;
 
 public class SeleniumSampleTest {
 
@@ -35,9 +35,9 @@ public class SeleniumSampleTest {
     {
     	SeleniumSample.main(null);
         try {
-            assertEquals("Hello World!" + System.getProperty("line.separator") + "The app is working" +  System.getProperty("line.separator") , outContent.toString());
+            assertEquals("Hello, The app is working" + System.getProperty("line.separator"), outContent.toString());
         } catch (AssertionError e) {
-            fail("\"message\" is not \"Hello World!\"");
+            fail("\"message\" is not \"Hello, The app is working\"");
         }
     }
 
